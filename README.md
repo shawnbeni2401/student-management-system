@@ -3,7 +3,7 @@
 A complete web-based solution for college event management, featuring role-based access control, multi-stage approval workflow, and automatic OD letter generation.
 
 ## 👥 Roles & Credentials
-The system is pre-seeded with the following users (Password: `password123`):
+The system is pre-seeded with the following users:
 - **Admin:** `admin@college.edu` (User verification & system monitoring)
 - **HOD:** `hod_cse@college.edu` (Departmental approvals)
 - **Staff:** `staff@college.edu` (Event creation)
