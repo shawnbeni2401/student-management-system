@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | EventHub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.png" class="college-logo" alt="College Logo">
+            <h2>Student</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="switchTab('explore')">
+                <i class="fas fa-search"></i> <span>Explore Events</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('myEvents')">
+                <i class="fas fa-tasks"></i> <span>My Applications</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('permissions')">
+                <i class="fas fa-file-signature"></i> <span>Permissions & Leaves</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <h1 id="tabTitle">Explore Events</h1>
+            <div class="user-profile">
+                <div class="dept-badge" id="stuReg">REG001</div>
+                <span id="stuName">Student</span>
+                <div class="profile-avatar"><i class="fas fa-user"></i></div>
+            </div>
+        </header>
+
+        <!-- Tab: Explore Events -->
+        <div id="exploreTab" class="tab-content">
+            <div id="allEventsGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <div id="my-eventsTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search my events..." onkeyup="filterTable('myParticipationList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>OD Letter</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myParticipationList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="permissionsTab" class="tab-content hidden">
+            <!-- Apply for Permission Form -->
+            <div class="card event-form-card" style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 20px;">Request Permission or Leave</h3>
+                <form id="permissionForm">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Request Type</label>
+                            <select id="permType" required onchange="
+                                const isLeave = this.value === 'leave';
+                                document.getElementById('timeInputsGrp').style.display = isLeave ? 'none' : 'flex';
+                                document.getElementById('toDateGrp').style.display = isLeave ? 'block' : 'none';
+                                document.getElementById('permDateLabel').innerText = isLeave ? 'From Date' : 'Date';
+                            ">
+                                <option value="outgoing">Out-going / Gate Pass</option>
+                                <option value="leave">Leave of Absence</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Reason (e.g., Medical, Personal)</label>
+                            <input type="text" id="permReason" placeholder="Xerox, Sickness" required>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group" id="fromDateGrp">
+                            <label id="permDateLabel">Date</label>
+                            <input type="date" id="permDate" required>
+                        </div>
+                        <div class="input-group" id="toDateGrp" style="display:none;">
+                            <label>To Date (Optional)</label>
+                            <input type="date" id="permToDate">
+                        </div>
+                    </div>
+                    <div class="input-row" id="timeInputsGrp">
+                        <div class="input-group">
+                            <label>Out Time (Optional)</label>
+                            <input type="time" id="permOutTime">
+                        </div>
+                        <div class="input-group">
+                            <label>In Time (Optional)</label>
+                            <input type="time" id="permInTime">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Description</label>
+                        <textarea id="permDescription" rows="3" placeholder="Brief details about the request..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" id="permSubmitBtn">Submit Request</button>
+                </form>
+            </div>
+
+            <!-- Permission History -->
+            <div class="data-card">
+                <div class="table-header">
+                    <h3>My Permission Requests</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search permissions..." onkeyup="filterTable('myPermissionList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Reason</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Permission Letter</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myPermissionList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/toast.js"></script>
+    <script src="assets/js/dashboard-utils.js"></script>
+    <script src="assets/js/student.js"></script>
+</body>
+</html>

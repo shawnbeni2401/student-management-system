@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub | Management & OD Approval</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Login Card -->
+        <div class="card" id="loginCard">
+            <div class="brand">
+                <img src="assets/images/logo.png" class="college-logo" alt="College Logo">
+                <h1>Welcome Back</h1>
+                <p>College Event Management System</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@college.edu" required>
+                </div>
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" id="loginBtn">Sign In</button>
+            </form>
+            
+            <div class="footer-links">
+                <p>New here? <a href="#" onclick="toggleForms()">Create Account</a></p>
+            </div>
+        </div>
+
+        <!-- Register Card (Hidden by default) -->
+        <div class="card hidden" id="registerCard">
+            <div class="brand">
+                <img src="assets/images/logo.png" class="college-logo" alt="College Logo">
+                <h1>Create Account</h1>
+                <p>Join the college event network</p>
+            </div>
+            
+            <form id="registerForm">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="regRole">Role</label>
+                        <select id="regRole" required onchange="toggleStudentFields()">
+                            <option value="student">Student</option>
+                            <option value="staff">Staff</option>
+                            <option value="hod">HOD</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="name@college.edu" required>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group" id="regNoGroup">
+                        <label for="regNo">Register Number</label>
+                        <input type="text" id="regNo" placeholder="STU12345">
+                    </div>
+                    <div class="input-group">
+                        <label for="regDept">Department</label>
+                        <select id="regDept" required>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="MECH">MECH</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="registerBtn">Register Now</button>
+                <p class="verification-note">* Account requires admin verification before login.</p>
+            </form>
+            
+            <div class="footer-links">
+                <p>Already have an account? <a href="#" onclick="toggleForms()">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/toast.js"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>

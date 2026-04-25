@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD Approval Portal | EventHub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.png" class="college-logo" alt="College Logo">
+            <h2>HOD Approval</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="switchTab('explore')">
+                <i class="fas fa-search"></i> <span>Explore Events</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('approvals')">
+                <i class="fas fa-check-double"></i> <span>Event Approvals</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('permApprovals')">
+                <i class="fas fa-file-signature"></i> <span>Permission Approvals</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('events')">
+                <i class="fas fa-calendar-alt"></i> <span>Manage Events</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('create')">
+                <i class="fas fa-plus-circle"></i> <span>Create Event</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('history')">
+                <i class="fas fa-history"></i> <span>History</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <h1 id="tabTitle">Pending Approvals</h1>
+            <div class="user-profile">
+                <div class="dept-badge" id="hodDept">Dept</div>
+                <span id="hodName">HOD</span>
+                <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>
+            </div>
+        </header>
+
+        <!-- Tab: Explore Events (New Card View) -->
+        <div id="exploreTab" class="tab-content">
+            <div id="allEventsGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <div id="approvalsTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search approvals..." onkeyup="filterTable('pendingParticipationList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Reg No</th>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Details</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingParticipationList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="historyTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search history..." onkeyup="filterTable('historyParticipationList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyParticipationList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="permApprovalsTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <h3>Pending Permissions</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search permissions..." onkeyup="filterTable('pendingPermissionList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Reg No</th>
+                            <th>Reason</th>
+                            <th>Description</th>
+                            <th>Date / Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingPermissionList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="data-card" style="margin-top:2rem;">
+                <div class="table-header">
+                    <h3>Permission History</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search history..." onkeyup="filterTable('historyPermissionList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Reason</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Permission Letter</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyPermissionList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Events List -->
+        <div id="eventsTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search events..." onkeyup="filterTable('staffEventList', this.value)">
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffEventList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Create/Edit Event -->
+        <div id="createTab" class="tab-content hidden">
+            <div class="card event-form-card">
+                <h3 id="formTitle" style="margin-bottom: 20px;">Create New Event</h3>
+                <form id="createEventForm">
+                    <input type="hidden" id="editEventId" value="">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Event Title</label>
+                            <input type="text" id="eventTitle" placeholder="Workshop on AI" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Event Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Description</label>
+                        <textarea id="eventDesc" rows="4" placeholder="Briefly describe the event..."></textarea>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Event Type</label>
+                            <select id="isExternal" onchange="toggleExternalFields()">
+                                <option value="0">Internal (On Campus)</option>
+                                <option value="1">External (Off Campus)</option>
+                            </select>
+                        </div>
+                        <div class="input-group" id="collegeGroup" style="display:none">
+                            <label>College/Venue Name</label>
+                            <input type="text" id="collegeName" placeholder="IIT Madras">
+                        </div>
+                        <div class="input-group" id="internalVenueGroup">
+                            <label>Venue (Inside Campus)</label>
+                            <input type="text" id="venue" placeholder="Seminar Hall A, Auditorium, etc.">
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="mapsGroup" style="display:none">
+                        <label>Google Maps URL</label>
+                        <input type="url" id="mapsUrl" placeholder="https://goo.gl/maps/...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Event Poster (Leave blank to keep current)</label>
+                        <input type="file" id="eventPoster" accept="image/*,application/pdf">
+                    </div>
+
+                    <div class="button-row" style="display: flex; gap: 1rem;">
+                        <button type="submit" id="createBtn" class="btn-primary">Save Event</button>
+                        <button type="button" id="cancelEditBtn" class="btn-secondary" style="display:none" onclick="cancelEdit()">Cancel Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/toast.js"></script>
+    <script src="assets/js/dashboard-utils.js"></script>
+    <script src="assets/js/hod.js"></script>
+</body>
+</html>

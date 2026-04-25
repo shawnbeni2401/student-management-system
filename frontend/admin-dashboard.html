@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EventHub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.png" class="college-logo" alt="College Logo">
+            <h2>Admin Panel</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="switchTab('explore')">
+                <i class="fas fa-search"></i> <span>Explore Events</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('overview')">
+                <i class="fas fa-home"></i> <span>Overview</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('verification')">
+                <i class="fas fa-user-check"></i> <span>Verification</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('users')">
+                <i class="fas fa-users"></i> <span>All Users</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('events')">
+                <i class="fas fa-calendar-alt"></i> <span>Manage Events</span>
+            </a>
+            <a href="#" class="nav-item" onclick="switchTab('createEvent')">
+                <i class="fas fa-plus-circle"></i> <span>Create Event</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <h1 id="tabTitle">Dashboard Overview</h1>
+            <div class="user-profile">
+                <span id="adminName">Admin</span>
+                <div class="profile-avatar"><i class="fas fa-user-shield"></i></div>
+            </div>
+        </header>
+
+        <!-- Tab: Explore Events -->
+        <div id="exploreTab" class="tab-content">
+            <div id="allEventsGrid">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div id="overviewTab" class="tab-content hidden">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3>Pending</h3>
+                        <p id="statPending">-</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Students</h3>
+                        <p id="statStudents">-</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3>Active Events</h3>
+                        <p id="statEvents">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Verification -->
+        <div id="verificationTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="verificationSearch" placeholder="Search by name, email..." onkeyup="filterTable('pendingList', this.value)">
+                    </div>
+                </div>
+                <table id="pendingTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Department</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendingList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Users -->
+        <div id="usersTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="usersSearch" placeholder="Search all users..." onkeyup="filterTable('userList', this.value)">
+                    </div>
+                </div>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Dept</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Events -->
+        <div id="eventsTab" class="tab-content hidden">
+            <div class="data-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="eventsSearch" placeholder="Search events..." onkeyup="filterTable('eventList', this.value)">
+                    </div>
+                </div>
+                <table id="eventsTable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Dept</th>
+                            <th>Created By</th>
+                            <th>Participants</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventList">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab: Create/Edit Event -->
+        <div id="createEventTab" class="tab-content hidden">
+            <div class="card event-form-card">
+                <h3 id="formTitle" style="margin-bottom: 20px;">Create New Event</h3>
+                <form id="createEventForm">
+                    <input type="hidden" id="editEventId" value="">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Event Title</label>
+                            <input type="text" id="eventTitle" placeholder="Workshop on AI" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Event Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Description</label>
+                        <textarea id="eventDesc" rows="4" placeholder="Briefly describe the event..."></textarea>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>Event Type</label>
+                            <select id="isExternal" onchange="toggleExternalFields()">
+                                <option value="0">Internal (On Campus)</option>
+                                <option value="1">External (Off Campus)</option>
+                            </select>
+                        </div>
+                        <div class="input-group" id="collegeGroup" style="display:none">
+                            <label>College/Venue Name</label>
+                            <input type="text" id="collegeName" placeholder="IIT Madras">
+                        </div>
+                        <div class="input-group" id="internalVenueGroup">
+                            <label>Venue (Inside Campus)</label>
+                            <input type="text" id="venue" placeholder="Seminar Hall A, Auditorium, etc.">
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="mapsGroup" style="display:none">
+                        <label>Google Maps URL</label>
+                        <input type="url" id="mapsUrl" placeholder="https://goo.gl/maps/...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Department Target</label>
+                        <select id="eventDept">
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="MECH">MECH</option>
+                            <option value="ALL">ALL DEPARTMENTS</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Event Poster (Leave blank to keep current)</label>
+                        <input type="file" id="eventPoster" accept="image/*,application/pdf">
+                    </div>
+
+                    <div class="button-row" style="display: flex; gap: 1rem;">
+                        <button type="submit" id="createBtn" class="btn-primary">Save Event</button>
+                        <button type="button" id="cancelEditBtn" class="btn-secondary" style="display:none" onclick="cancelEdit()">Cancel Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/toast.js"></script>
+    <script src="assets/js/dashboard-utils.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
