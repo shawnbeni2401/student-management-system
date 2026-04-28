@@ -1,6 +1,7 @@
 node_modules/
 .env
-backend/uploads/
+# backend/uploads/ — images are tracked; only ignore generated PDFs
+backend/uploads/*.pdf
 frontend/uploads/
 *.log
 .DS_Store
