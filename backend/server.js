@@ -18,8 +18,10 @@ const participationRoutes = require('./routes/participationRoutes');
 const permissionRoutes = require('./routes/permissionRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
+const upload = require('./middlewares/upload');
+
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(upload.UPLOAD_DIR));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Initialize DB
