@@ -25,19 +25,4 @@ const upload = multer({
     }
 });
 
-// Multer 2.x returns a promise instead of calling next() like traditional
-// Express middleware. This wrapper makes it compatible with Express 5
-// middleware arrays by awaiting the promise and calling next() properly.
-upload.wrappedSingle = (fieldName) => {
-    return (req, res, next) => {
-        const middleware = upload.single(fieldName);
-        middleware(req, res, (err) => {
-            if (err) {
-                return res.status(400).json({ message: err.message });
-            }
-            next();
-        });
-    };
-};
-
 module.exports = upload;
